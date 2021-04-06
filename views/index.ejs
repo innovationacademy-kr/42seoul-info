@@ -20,6 +20,12 @@
   <% } else { %>
     <p>Hi, <%= user.displayName %></p>
     <p><a href="/logout">log out</a></p>
+    <div>
+      <form id="search" action="/users">
+        <input type="text" name="u" placeholder="username">
+        <button>search</button>
+      </form>
+    </div>
   <% } %>
 </body>
 

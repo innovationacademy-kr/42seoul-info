@@ -1,9 +1,28 @@
 const express = require('express');
 const router = express.Router();
+const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
+const axios = require('axios');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/', ensureLoggedIn('/login/42'), function (req, res, next) {
+  const username = req.query.u;
+  const accessToken = req.session.accessToken;
+  const headers = {
+    'headers':
+      { 'Authorization': 'Bearer ' + accessToken }
+  }
+  const uri = 'https://api.intra.42.fr/v2/users/' + username;
+  axios.get(uri, headers)
+  .then(response => {
+    res.render('user', {user: response.data});
+  })
+  .catch(e => {
+    console.error(e);
+  })
+  .finally((d, p) => {
+    console.log(this.user, p);
+  });
+
 });
 
 module.exports = router;

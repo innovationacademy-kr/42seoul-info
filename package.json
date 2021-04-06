@@ -7,6 +7,7 @@
     "test": "node_modules/.bin/jest"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "connect-ensure-login": "^0.1.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",

@@ -1,0 +1,48 @@
+<style>
+  #profile-image {
+    width: 160px;
+    border-radius: 20px;
+  }
+</style>
+<header>
+  <h3>Profile</h3>
+  <div><img src="<%= user.image_url %>" alt="<%= user.login %> image" id="profile-image"></div>
+  <dl>
+    <dt>name</dt>
+    <dd><a href="https://profile.intra.42.fr/users/<%= user.login %>" target="_blank"><%= user.displayname %></a></dd>
+    <dt>login</dt>
+    <dd><%= user.login %></dd>
+
+    <dt>correction point</dt>
+    <dd><%= user.correction_point %></dd>
+    <dt>wallet</dt>
+    <dd><%= user.wallet %></dd>
+  </dl>
+  <h3>Cursus</h3>
+  <dl>
+    <% user.cursus_users.forEach(cuser => { %>
+      <dt>grade</dt>
+      <dd><%= cuser.grade %></dd>
+      <dt>level</dt>
+      <dd><%= cuser.level %></dd>
+      <dt>blackholed at</dt>
+      <dd><%= cuser.blackholed_at %></dd>
+    <% }); %>
+  </dl>
+  <h3>Projects</h3>
+  <dl>
+    <% user.projects_users.forEach(item => { %>
+      <dt>project</dt>
+      <dd><%= item.project.name %></dd>
+      <dt>marked_at</dt>
+      <dd><%= item.marked_at %></dd>
+    <% }); %>
+  </dl>
+  <dl>
+    <dt>staff</dt>
+    <dd><%= user['staff?'] %></dd>
+  </dl>
+</header>
+<pre>
+  <%= JSON.stringify(user, null, 2) %>
+</pre>
