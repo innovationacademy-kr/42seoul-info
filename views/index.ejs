@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <h1>
+    <%= title %>
+  </h1>
+  <p>Welcome to <%= title %>
+  </p>
+  <% if (typeof user === 'undefined' ) { %>
+    <p><a href="/login/42" onclick="document.getElementById('loading').hidden = false;">Login with 42</a></p>
+    <div id="loading" hidden><img src="/images/puff.svg"></div>
+  <% } else { %>
+    <p>Hi, <%= user.displayName %></p>
+    <p><a href="/logout">log out</a></p>
+  <% } %>
+</body>
+
+</html>
