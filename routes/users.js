@@ -22,7 +22,7 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
       .then(async response => {
         const one = response.data;
         await User.save(one);
-        res.render('user', { user: one });
+        res.render('user', { user: one, createdAt: dayjs().format('YYYY/DD/MM HH:mm:ss')  });
       })
       .catch(e => {
         const error = new Error(e.message);
