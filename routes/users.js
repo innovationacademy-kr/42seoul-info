@@ -28,6 +28,10 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
         const error = new Error(e.message);
         console.log(e.message);
         error.status = e.response.status;
+        if (error.status === 401) {
+          res.redirect('/login/42');
+          return;
+        }
         next(error);
       })
       .finally(() => { });
