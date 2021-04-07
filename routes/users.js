@@ -32,7 +32,8 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
       })
       .finally(() => { });
   } else {
-    res.render('user', { user: user.data, createdAt: dayjs(user.createdAt).format('YYYY/DD/MM HH:mm:ss') })
+    const one = (typeof user.data === 'string') ? JSON.parse(user.data) : user.data;
+    res.render('user', { user: one, createdAt: dayjs(user.createdAt).format('YYYY/DD/MM HH:mm:ss') })
   }
 
 });
