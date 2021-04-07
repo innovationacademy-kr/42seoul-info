@@ -1,3 +1,4 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
   #profile-image {
     width: 160px;
@@ -9,6 +10,7 @@
     <%- include('./search.ejs') %>
   </div>
   <h3>Profile</h3>
+  <p>created at: <%= createdAt %></p>
   <div><img src="<%= user.image_url %>" alt="<%= user.login %> image" id="profile-image"></div>
   <dl>
     <dt>name</dt>
