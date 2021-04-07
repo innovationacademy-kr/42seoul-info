@@ -5,6 +5,9 @@
   }
 </style>
 <header>
+  <div>
+    <%- include('./search.ejs') %>
+  </div>
   <h3>Profile</h3>
   <div><img src="<%= user.image_url %>" alt="<%= user.login %> image" id="profile-image"></div>
   <dl>
