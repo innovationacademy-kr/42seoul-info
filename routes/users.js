@@ -13,15 +13,15 @@ router.get('/', ensureLoggedIn('/login/42'), function (req, res, next) {
   }
   const uri = 'https://api.intra.42.fr/v2/users/' + username;
   axios.get(uri, headers)
-  .then(response => {
-    res.render('user', {user: response.data});
-  })
-  .catch(e => {
-    console.error(e);
-  })
-  .finally((d, p) => {
-    console.log(this.user, p);
-  });
+    .then(response => {
+      res.render('user', { user: response.data });
+    })
+    .catch(e => {
+      const error = new Error(e.message);
+      error.status = e.response.status;
+      next(error);
+    })
+    .finally(() => { });
 
 });
 

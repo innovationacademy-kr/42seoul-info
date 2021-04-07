@@ -10,6 +10,7 @@
     "axios": "^0.21.1",
     "connect-ensure-login": "^0.1.1",
     "cookie-parser": "~1.4.4",
+    "dayjs": "^1.10.4",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "ejs": "~2.6.1",
