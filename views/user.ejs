@@ -34,7 +34,7 @@
       <dt>level</dt>
       <dd><%= cuser.level %></dd>
       <dt>blackholed at</dt>
-      <dd><%= cuser.blackholed_at ? dayjs(cuser.blackholed_at).format('YYYY/DD/MM HH:mm:ss') : '' %></dd>
+      <dd><%= cuser.blackholed_at ? dayjs(cuser.blackholed_at).format('YYYY/MM/DD HH:mm:ss') : '' %></dd>
     <% }); %>
   </dl>
   <h3>Projects</h3>
@@ -43,7 +43,7 @@
       <dt>project</dt>
       <dd><%= item.project.name %></dd>
       <dt>marked_at</dt>
-      <dd><%= dayjs(item.marked_at).format('YYYY/DD/MM HH:mm:ss') %></dd>
+      <dd><%= dayjs(item.marked_at).format('YYYY/MM/DD HH:mm:ss') %></dd>
     <% }); %>
   </dl>
   <h3>Achievements</h3>
