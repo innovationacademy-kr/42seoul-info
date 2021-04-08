@@ -4,6 +4,9 @@
     width: 160px;
     border-radius: 20px;
   }
+  .achievement-image {
+    width: 24px;
+  }
 </style>
 <header>
   <div>
@@ -31,7 +34,7 @@
       <dt>level</dt>
       <dd><%= cuser.level %></dd>
       <dt>blackholed at</dt>
-      <dd><%= cuser.blackholed_at %></dd>
+      <dd><%= cuser.blackholed_at ? dayjs(cuser.blackholed_at).format('YYYY/DD/MM HH:mm:ss') : '' %></dd>
     <% }); %>
   </dl>
   <h3>Projects</h3>
@@ -40,7 +43,21 @@
       <dt>project</dt>
       <dd><%= item.project.name %></dd>
       <dt>marked_at</dt>
-      <dd><%= item.marked_at %></dd>
+      <dd><%= dayjs(item.marked_at).format('YYYY/DD/MM HH:mm:ss') %></dd>
+    <% }); %>
+  </dl>
+  <h3>Achievements</h3>
+  <dl>
+    <% user.achievements.forEach(item => { %>
+      <dt>name</dt>
+      <dd>
+        <%= item.name %>
+        <span>
+          <img src="https://cdn.intra.42.fr<%= item.image.substring(8)%>" class="achievement-image">
+        </span>
+      </dd>
+      <dt>description</dt>
+      <dd><%= item.description %></dd>
     <% }); %>
   </dl>
   <dl>
