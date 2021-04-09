@@ -38,34 +38,21 @@
     <% }); %>
   </dl>
   <h3>Projects</h3>
-  <dl>
-    <table>
-      <!-- <thead>
+  <table>
+    <tbody>
+      <tr>
+        <td>project</td>
+        <td>marked_at</td>
+      </tr>
+        <% user.projects_users.forEach(item => { %>
           <tr>
-              <th colspan="2">Projects</th>
+            <td><%= item.project.name %></td>
+            <td><%= dayjs(item.marked_at).format('YYYY/MM/DD HH:mm:ss') %></td>
           </tr>
-      </thead> -->
-      <tbody>
-          <tr>
-              <td>project</td>
-              <td>marked_at</td>
-          </tr>
-          <% user.projects_users.forEach(item => { %>
-            <tr>
-              <td><%= item.project.name %></td>
-              <td><%= dayjs(item.marked_at).format('YYYY/MM/DD HH:mm:ss') %></td>
-            </tr>
-          <% }); %>
-      </tbody>
+        <% }); %>
+    </tbody>
   </table>
 
-    <!-- <% user.projects_users.forEach(item => { %>
-      <dt>project</dt>
-      <dd><%= item.project.name %></dd>
-      <dt>marked_at</dt>
-      <dd><%= dayjs(item.marked_at).format('YYYY/MM/DD HH:mm:ss') %></dd>
-    <% }); %> -->
-  </dl>
   <h3>Achievements</h3>
   <dl>
     <% user.achievements.forEach(item => { %>
