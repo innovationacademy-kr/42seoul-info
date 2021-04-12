@@ -1,4 +1,5 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel='stylesheet' href='/stylesheets/style.css' />
 <style>
   #profile-image {
     width: 160px;
@@ -13,7 +14,10 @@
     <%- include('./search.ejs') %>
   </div>
   <h3>Profile</h3>
-  <p>created at: <%= createdAt %></p>
+  <p>
+    info at: <%= updatedAt %>
+    <button id="update">update</button>
+  </p>
   <div><img src="<%= user.image_url %>" alt="<%= user.login %> image" id="profile-image"></div>
   <dl>
     <dt>name</dt>
@@ -41,8 +45,8 @@
   <table>
     <tbody>
       <tr>
-        <td>project</td>
-        <td>marked_at</td>
+        <th>project</th>
+        <th>marked_at</th>
       </tr>
         <% user.projects_users.forEach(item => { %>
           <tr>
@@ -75,3 +79,15 @@
 <pre>
   <%= JSON.stringify(user, null, 2) %>
 </pre>
+<script>
+  var updBtn = document.getElementById('update');
+  updBtn.addEventListener('click', function(e){
+    var qs = location.search;
+    var url = location.pathname;
+    var info = qs.match(/(\?u=\w*)&*/);
+    if (info.length > 1) {
+      url += info[1] + '&r=' + Date.now();
+      location.href = url;
+    }
+  });
+</script>

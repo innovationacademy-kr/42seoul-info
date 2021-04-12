@@ -31,7 +31,7 @@ router.use(passport.session());
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express', user: req.user });
+  res.render('index', { title: '42Seoul Info', user: req.user });
 });
 
 router.get('/login/42',

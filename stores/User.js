@@ -22,13 +22,10 @@ async function save(user) {
   const result = await User.findAll({
     where: { username: user.login }
   });
-  if (result.length === 0) {
-    const result2 = await User.create({ username: user.login, data: user });
-    console.log(result2);
-    return result2;
-  } else {
-    throw new Error('Already registered!');
-  }
+  const id = (result[0]) ? result[0].dataValues.id : null;
+  const result2 = await User.upsert({ id: id, username: user.login, data: user });
+  console.log(result2);
+  return result2;
 }
 
 async function findOne(username) {

@@ -8,9 +8,10 @@ const User = require('../stores/User');
 /* GET users listing. */
 router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
   const username = req.query.u;
+  const refresh = req.query.r;
   const user = await User.findOne(username);
   console.log(user);
-  if (!user) {
+  if (!user || refresh) {
     const accessToken = req.session.accessToken;
 
     const headers = {
@@ -22,7 +23,7 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
       .then(async response => {
         const one = response.data;
         await User.save(one);
-        res.render('user', { user: one, createdAt: dayjs().format('YYYY/MM/DD HH:mm:ss'), dayjs });
+        res.render('user', { user: one, updatedAt: dayjs().format('YYYY/MM/DD HH:mm:ss'), dayjs });
       })
       .catch(e => {
         const error = new Error(e.message);
@@ -37,7 +38,7 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
       .finally(() => { });
   } else {
     const one = (typeof user.data === 'string') ? JSON.parse(user.data) : user.data;
-    res.render('user', { user: one, createdAt: dayjs(user.createdAt).format('YYYY/MM/DD HH:mm:ss'), dayjs })
+    res.render('user', { user: one, updatedAt: dayjs(user.updatedAt).format('YYYY/MM/DD HH:mm:ss'), dayjs })
   }
 
 });
