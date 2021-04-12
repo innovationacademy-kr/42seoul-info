@@ -6,3 +6,27 @@ body {
 a {
   color: #00B7FF;
 }
+
+#profile-image {
+  width: 160px;
+  border-radius: 20px;
+}
+table {
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #eee;
+  padding: 1px 6px;
+}
+.achievement-image {
+  width: 24px;
+}
+.raw {
+  height: 300px;
+  overflow: auto;
+  border: 1px solid #888;
+  background-color: #eee;
+}
+.meta {
+  font-size: x-small;
+}

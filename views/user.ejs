@@ -1,23 +1,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel='stylesheet' href='/stylesheets/style.css' />
-<style>
-  #profile-image {
-    width: 160px;
-    border-radius: 20px;
-  }
-  .achievement-image {
-    width: 24px;
-  }
-</style>
 <header>
   <div>
     <%- include('./search.ejs') %>
   </div>
-  <h3>Profile</h3>
-  <p>
+  <p class="meta">
     info at: <%= updatedAt %>
     <button id="update">update</button>
   </p>
+  <h3>Profile</h3>
   <div><img src="<%= user.image_url %>" alt="<%= user.login %> image" id="profile-image"></div>
   <dl>
     <dt>name</dt>
@@ -48,35 +39,39 @@
         <th>project</th>
         <th>marked_at</th>
       </tr>
-        <% user.projects_users.forEach(item => { %>
-          <tr>
-            <td><%= item.project.name %></td>
-            <td><%= dayjs(item.marked_at).format('YYYY/MM/DD HH:mm:ss') %></td>
-          </tr>
-        <% }); %>
+      <% user.projects_users.forEach(item => { %>
+        <tr>
+          <td><%= item.project.name %></td>
+          <td><%= dayjs(item.marked_at).format('YYYY/MM/DD HH:mm:ss') %></td>
+        </tr>
+      <% }); %>
     </tbody>
   </table>
 
   <h3>Achievements</h3>
-  <dl>
+  <table>
+    <tr>
+      <th>name</th>
+      <th>description</th>
+    </tr>
     <% user.achievements.forEach(item => { %>
-      <dt>name</dt>
-      <dd>
-        <%= item.name %>
-        <span>
-          <img src="https://cdn.intra.42.fr<%= item.image.substring(8)%>" class="achievement-image">
-        </span>
-      </dd>
-      <dt>description</dt>
-      <dd><%= item.description %></dd>
+      <tr>
+        <td>
+          <span>
+            <img src="https://cdn.intra.42.fr<%= item.image.substring(8)%>" class="achievement-image">
+          </span>
+          <%= item.name %>
+        </td>
+        <td><%= item.description %></td>
+      </tr>
     <% }); %>
-  </dl>
+  </table>
   <dl>
     <dt>staff</dt>
     <dd><%= user['staff?'] %></dd>
   </dl>
 </header>
-<pre>
+<pre class="raw">
   <%= JSON.stringify(user, null, 2) %>
 </pre>
 <script>

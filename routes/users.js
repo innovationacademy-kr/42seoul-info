@@ -10,7 +10,6 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
   const username = req.query.u;
   const refresh = req.query.r;
   const user = await User.findOne(username);
-  console.log(user);
   if (!user || refresh) {
     const accessToken = req.session.accessToken;
 
