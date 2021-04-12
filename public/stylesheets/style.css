@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding: 50px 20px;
   font: 14px "Courier New", Helvetica, Arial, sans-serif;
 }
 
@@ -29,4 +29,13 @@ th, td {
 }
 .meta {
   font-size: x-small;
+}
+.project {
+  width: 30%;
+}
+.marked {
+  width: 30%;
+}
+.hourdiff {
+  width: 40%;
 }
