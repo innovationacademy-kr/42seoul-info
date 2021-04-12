@@ -4,6 +4,7 @@ const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 const axios = require('axios');
 const dayjs = require('dayjs');
 const User = require('../stores/User');
+const ObjectUtils = require('../common/ObjectUtils');
 
 /* GET users listing. */
 router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
@@ -21,6 +22,7 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
     axios.get(uri, headers)
       .then(async response => {
         const one = response.data;
+        ObjectUtils.calcDiff(one.projects_users, 'marked_at');
         await User.save(one);
         res.render('user', { user: one, updatedAt: dayjs().format('YYYY/MM/DD HH:mm:ss'), dayjs });
       })
@@ -37,6 +39,7 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
       .finally(() => { });
   } else {
     const one = (typeof user.data === 'string') ? JSON.parse(user.data) : user.data;
+    ObjectUtils.calcDiff(one.projects_users, 'marked_at');
     res.render('user', { user: one, updatedAt: dayjs(user.updatedAt).format('YYYY/MM/DD HH:mm:ss'), dayjs })
   }
 

@@ -38,11 +38,15 @@
       <tr>
         <th>project</th>
         <th>marked_at</th>
+        <th>hour diff</th>
       </tr>
       <% user.projects_users.forEach(item => { %>
         <tr>
           <td><%= item.project.name %></td>
           <td><%= dayjs(item.marked_at).format('YYYY/MM/DD HH:mm:ss') %></td>
+          <td>
+            <div class="diff"><%= item.diff %></div>
+          </td>
         </tr>
       <% }); %>
     </tbody>
@@ -85,4 +89,10 @@
       location.href = url;
     }
   });
+  var list = document.querySelectorAll('.diff');
+  list.forEach(item => {
+    var diff = Number(item.innerText) / 5;
+    item.style = 'font-size: x-small; background-color: #00babc; height: 10px; width: ' + diff + 'px;';
+  });
+
 </script>
