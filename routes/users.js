@@ -44,10 +44,16 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
         const one = {...response.data, 'coalition': await get42UserCoalition(username, headers)};
         ObjectUtils.calcDiff(one.projects_users, 'marked_at');
         await User.save(one);
-        res.render('user', { 
-          user: one, 
-          updatedAt: dayjs().format('YYYY/MM/DD HH:mm:ss'), 
-          dayjs 
+        if (!one.coalition) {
+          one.coalition = {
+            name: '',
+            cover_url: ''
+          };
+        }
+        res.render('user', {
+          user: one,
+          updatedAt: dayjs().format('YYYY/MM/DD HH:mm:ss'),
+          dayjs
         });
       })
       .catch(e => {
@@ -64,10 +70,16 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
   } else {
     const one = (typeof user.data === 'string') ? JSON.parse(user.data) : user.data;
     ObjectUtils.calcDiff(one.projects_users, 'marked_at');
-    res.render('user', { 
-      user: one, 
-      updatedAt: dayjs(user.updatedAt).format('YYYY/MM/DD HH:mm:ss'), 
-      dayjs, 
+    if (!one.coalition) {
+      one.coalition = {
+        name: '',
+        cover_url: ''
+      };
+    };
+    res.render('user', {
+      user: one,
+      updatedAt: dayjs(user.updatedAt).format('YYYY/MM/DD HH:mm:ss'),
+      dayjs,
     })
   }
 });
