@@ -53,8 +53,6 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
     ObjectUtils.calcDiff(one.projects_users, 'marked_at');
     one.coalition = coalitionErrHandling(one.coalition);
   }
-  console.log(user.updatedAt);
-  console.log(dayjs(!user || refresh? "" :user.updatedAt).format('YYYY/MM/DD HH:mm:ss'))
   res.render('user', { 
     user: one, 
     updatedAt: !user || refresh ?
