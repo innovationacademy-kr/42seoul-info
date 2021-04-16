@@ -10,7 +10,6 @@ const END_POINT_42_API = "https://api.intra.42.fr";
 
 const get42UserCoalition = async (username, headers) => {
   const coalitionUri = `${END_POINT_42_API}/v2/users/${username}/coalitions`;
-
   const { data } = await axios.get(coalitionUri, headers)
     .catch(e => {
       const error = new Error(e.message);
