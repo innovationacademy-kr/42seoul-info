@@ -8,6 +8,10 @@
     info at: <%= updatedAt %>
     <button id="update">update</button>
   </p>
+  <p>
+    <%= user.coalition.name %>
+  </p>
+  <img id="coalition" src="<%= user.coalition.cover_url %>"/>
   <h3>Profile</h3>
   <div><img src="<%= user.image_url %>" alt="<%= user.login %> image" id="profile-image"></div>
   <dl>
@@ -79,7 +83,7 @@
   <%= JSON.stringify(user, null, 2) %>
 </pre>
 <script>
-  var updBtn = document.getElementById('update');
+  const updBtn = document.getElementById('update');
   updBtn.addEventListener('click', function(e){
     var qs = location.search;
     var url = location.pathname;
@@ -89,10 +93,11 @@
       location.href = url;
     }
   });
-  var list = document.querySelectorAll('.diff');
+  const list = document.querySelectorAll('.diff');
   list.forEach(item => {
     var diff = Number(item.innerText) / 8;
     item.style = 'font-size: x-small; background-color: #00babc; height: 10px; width: ' + diff + 'px;';
   });
-
+  const coalition = document.getElementById('coalition');
+  coalition.style = 'height: 300px; width: 600px;';
 </script>
