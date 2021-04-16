@@ -14,17 +14,17 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
   const refresh = req.query.r;
   const user = await User.findOne(username);
   if (!user || refresh) {
-    const accessToken = req.session.accessToken;
-
-    const headers = {
-      'headers':
-        { 'Authorization': 'Bearer ' + accessToken }
-    }
-    const uri = `${END_POINT_42_API}/v2/users/${username}`;
     const coalitionUri = `${END_POINT_42_API}/v2/users/${username}/coalitions`;
-
+    const userUri = `${END_POINT_42_API}/v2/users/${username}`;
+    const axios42 = axios.create({
+      baseURL: END_POINT_42_API,
+      timeout: 2000,
+      'headers':
+        { 'Authorization': 'Bearer ' + req.session.accessToken }
+    })
+    
     try {
-      const response = await axios.all([axios.get(uri, headers), axios.get(coalitionUri, headers)]);
+      const response = await axios.all([axios42.get(userUri), axios42.get(coalitionUri)]);
       const one = {...response[0].data, 'coalition': response[1].data[0]};
       ObjectUtils.calcDiff(one.projects_users, 'marked_at');
       await User.save(one);
