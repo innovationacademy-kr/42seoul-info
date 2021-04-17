@@ -56,7 +56,7 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
   }
   res.render('user', { 
     user: one, 
-    updatedAt: dayjs(!user || refresh ?undefined:user.updatedAt).format('YYYY/MM/DD HH:mm:ss'),
+    updatedAt: dayjs(!user || refresh ? undefined : user.updatedAt).format('YYYY/MM/DD HH:mm:ss'),
     dayjs, 
   })
 });
