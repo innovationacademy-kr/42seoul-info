@@ -4,13 +4,14 @@ const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 const axios = require('axios');
 const User = require('../stores/User');
 const ObjectUtils = require('../common/ObjectUtils');
-const DateUtils = requrie('../common/DateUtils');
+const DateUtils = require('../common/DateUtils');
 
 const END_POINT_42_API = "https://api.intra.42.fr";
 
 const coalitionErrHandling = (coalition) =>{
-  if (coalition)
-    return (coalition);
+  if (coalition) {
+    return coalition
+  }
   return ({
     name: '',
     cover_url: ''
@@ -39,9 +40,8 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
       await User.save(one);
       one.coalition = coalitionErrHandling(one.coalition);
     } catch(err) {
-      const error = new Error("[User.js] getUri,getCoalition: " + err.message);
-      console.log(err.message);
-      error.status = e.response.status;
+      const error = new Error("[User.js] getUri, getCoalition: " + err.message);
+      error.status = err.response.status;
       if (error.status === 401) {
         res.redirect('/login/42');
         return;
@@ -55,9 +55,7 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
   }
   res.render('user', {
     user: one,
-    updatedAt: !user || refresh ?
-      DateUtils.format('YYYY/MM/DD HH:mm:ss') :
-      DateUtils.format(user.updatedAt, 'YYYY/MM/DD HH:mm:ss'),
+    updatedAt: DateUtils.getDatetime((!one || refresh) ? undefined : one.updatedAt),
     DateUtils,
   })
 });
