@@ -21,6 +21,10 @@ $ npm run start
 [http://localhost:4200/](http://localhost:4200/)
 to see the example in action.
 
+## Testing
+* add test code in `test/`
+* `node_modules/.bin/jest --watch`
+
 ## 이 문서의 저작권
 
 <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/cc-zero.png" width="80px"></img>
