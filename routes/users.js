@@ -9,8 +9,9 @@ const ObjectUtils = require('../common/ObjectUtils');
 const END_POINT_42_API = "https://api.intra.42.fr";
 
 const coalitionErrHandling = (coalition) =>{
-  if (coalition)
+  if (coalition) {
     return (coalition);
+  }
   return ({
     name: '',
     cover_url: ''
@@ -55,9 +56,7 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
   }
   res.render('user', { 
     user: one, 
-    updatedAt: !user || refresh ?
-      dayjs().format('YYYY/MM/DD HH:mm:ss') :
-      dayjs(user.updatedAt).format('YYYY/MM/DD HH:mm:ss'),
+    updatedAt: dayjs(!user || refresh ?undefined:user.updatedAt).format('YYYY/MM/DD HH:mm:ss'),
     dayjs, 
   })
 });
