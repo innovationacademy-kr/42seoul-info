@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 const axios = require('axios');
-const dayjs = require('dayjs');
 const User = require('../stores/User');
 const ObjectUtils = require('../common/ObjectUtils');
+const DateUtils = requrie('../common/DateUtils');
 
 const END_POINT_42_API = "https://api.intra.42.fr";
 
@@ -53,12 +53,12 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
     ObjectUtils.calcDiff(one.projects_users, 'marked_at');
     one.coalition = coalitionErrHandling(one.coalition);
   }
-  res.render('user', { 
-    user: one, 
+  res.render('user', {
+    user: one,
     updatedAt: !user || refresh ?
-      dayjs().format('YYYY/MM/DD HH:mm:ss') :
-      dayjs(user.updatedAt).format('YYYY/MM/DD HH:mm:ss'),
-    dayjs, 
+      DateUtils.format('YYYY/MM/DD HH:mm:ss') :
+      DateUtils.format(user.updatedAt, 'YYYY/MM/DD HH:mm:ss'),
+    DateUtils,
   })
 });
 
