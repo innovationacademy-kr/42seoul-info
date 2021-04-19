@@ -55,7 +55,7 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
   }
   res.render('user', {
     user: one,
-    updatedAt: DateUtils.getDatetime((!one || refresh) ? undefined : one.updatedAt),
+    updatedAt: DateUtils.getDatetime((!user || refresh) ? undefined : user.updatedAt),
     DateUtils,
   })
 });
