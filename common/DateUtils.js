@@ -13,6 +13,9 @@ const DateUtils = {
     return dayjs(str);
   },
   format: function(date, formatStr) {
+    if (date === null) {
+      return '';
+    }
     return dayjs(date).format(formatStr);
   }
 };

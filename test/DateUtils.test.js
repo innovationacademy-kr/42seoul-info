@@ -18,6 +18,7 @@ test('DateUtils.format', () => {
   expect(DateUtils.format(new Date('2021/04/17 13:05:05'), DATETIME_FORMAT)).toBe('2021-04-17 13:05:05');
   expect(DateUtils.format('2021/04/17 13:05:05', DATETIME_FORMAT)).toBe('2021-04-17 13:05:05');
   expect(DateUtils.format(undefined, DATETIME_FORMAT)).toBe(dateStr + ' ' + timeStr);
+  expect(DateUtils.format(null, DATETIME_FORMAT)).toBe('');
 });
 
 test('DateUtils.getDatetime', () => {
