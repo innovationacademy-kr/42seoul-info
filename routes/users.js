@@ -1,57 +1,32 @@
 const express = require('express');
 const router = express.Router();
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
-const axios = require('axios');
-const User = require('../stores/User');
 const ObjectUtils = require('../common/ObjectUtils');
 const DateUtils = require('../common/DateUtils');
-
-const END_POINT_42_API = "https://api.intra.42.fr";
-
-const coalitionErrHandling = (coalition) =>{
-  if (coalition) {
-    return coalition
-  }
-  return ({
-    name: '',
-    cover_url: ''
-  });
-}
+const userService = require('../services/userService');
 
 /* GET users listing. */
 router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
   const username = req.query.u;
   const refresh = req.query.r;
-  const user = await User.findOne(username);
+  const user = await userService.findOne(username);
   let one;
   if (!user || refresh) {
-    const coalitionUri = `${END_POINT_42_API}/v2/users/${username}/coalitions`;
-    const userUri = `${END_POINT_42_API}/v2/users/${username}`;
-    const axios42 = axios.create({
-      baseURL: END_POINT_42_API,
-      timeout: 2000,
-      'headers':
-        { 'Authorization': 'Bearer ' + req.session.accessToken }
-    })
     try {
-      const response = await axios.all([axios42.get(userUri), axios42.get(coalitionUri)]);
-      one = {...response[0].data, 'coalition': response[1].data[0]};
-      ObjectUtils.calcDiff(one.projects_users, 'marked_at');
-      await User.save(one);
-      one.coalition = coalitionErrHandling(one.coalition);
-    } catch(err) {
+      one = await userService.update(username, req.session.accessToken);
+    } catch (err) {
       const error = new Error("[User.js] getUri, getCoalition: " + err.message);
-      error.status = err.response.status;
+      error.status = (err.response) ? err.response.status : 500;
       if (error.status === 401) {
         res.redirect('/login/42');
         return;
       }
       next(error);
+      return;
     }
   } else {
     one = (typeof user.data === 'string') ? JSON.parse(user.data) : user.data;
     ObjectUtils.calcDiff(one.projects_users, 'marked_at');
-    one.coalition = coalitionErrHandling(one.coalition);
   }
   res.render('user', {
     user: one,

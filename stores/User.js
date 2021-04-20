@@ -14,7 +14,8 @@ const sequelize = (DB_NAME) ?
 class User extends Model { }
 User.init({
   username: DataTypes.STRING,
-  data: DataTypes.JSON
+  data: DataTypes.JSON,
+  active: DataTypes.BOOLEAN
 }, { sequelize, modelName: 'user' });
 
 async function save(user) {
