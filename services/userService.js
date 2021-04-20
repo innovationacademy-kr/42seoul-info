@@ -13,8 +13,9 @@ const userService = {
   save: async function (user) {
     return await User.save(user);
   },
-  findAll: async function () {
-    return await User.findAll();
+  findAll: async function (where) {
+    console.log(where);
+    return await User.findAll(where || {});
   },
   update: async function (username, accessToken) {
     const END_POINT_42_API = "https://api.intra.42.fr";

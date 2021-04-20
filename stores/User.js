@@ -39,9 +39,9 @@ async function findOne(username) {
   return user;
 }
 
-async function findAll() {
+async function findAll(where) {
   await sequelize.sync();
-  const result = await User.findAll({});
+  const result = await User.findAll(where || {});
   return result;
 }
 

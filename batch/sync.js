@@ -1,4 +1,5 @@
 require('dotenv').config();
+const { Op } = require("sequelize");
 const axios = require('axios');
 const userService = require('../services/userService');
 const END_POINT_42_API = "https://api.intra.42.fr";
@@ -27,23 +28,17 @@ async function getToken() {
   };
 }
 
-async function getActiveList() {
-  const list = await userService.findAll();
-  const filtered = list.filter(item => {
-    console.log(item.active);
-    return item.active;
-  });
-  return filtered;
+async function getActiveList(where) {
+  return await userService.findAll(where);;
 }
 
 async function updateList(list, accessToken) {
-  var asyncFunction = setInterval(fetchData, 3000);
+  var asyncFunction = setInterval(fetchData, 30);
   var idx = 0;
   function fetchData() {
-    console.log(idx);
-    var id = list[idx];
-    console.log(id);
-    userService.update(id.username, accessToken);
+    var user = list[idx];
+    console.log(idx, user.id, user.username);
+    // userService.update(user.username, accessToken);
     idx++;
     if (idx === list.length) {
       clearInterval(asyncFunction);
@@ -57,7 +52,17 @@ async function doIt() {
   console.log(token.access_token);
 
   // load list with active status
-  const activeList = await getActiveList();
+  const where = {
+    where: {
+      id: {
+        [Op.gte]: process.env.START_ID || 0
+      },
+      active: {
+        [Op.eq]: true
+      }
+    }
+  }
+  const activeList = await getActiveList(where);
 
   // update each item every 3 senconds
   if (activeList.length > 0 && token.access_token) {
