@@ -3,7 +3,7 @@ const achieveMap = {
   'Etre logué 90h sur une semaine.': 'Be logged in 90 hours over a week.',
   'Assister à une conférence.': 'Attend a conference.',
   'Assister à 3 conférences.': 'Attend 3 conferences.',
-  'Assister à 10 conférences.': 'Assister à 10 conférences.',
+  'Assister à 10 conférences.': 'Attend 10 conferences.',
   'Avoir donné 1 point de correction au pool.': 'Have given 1 correction point to the pool.',
   'Avoir donné 10 points de correction au pool.': 'Have given 10 correction points to the pool.',
   'Valider son premier projet.': 'Validate your first project.',
