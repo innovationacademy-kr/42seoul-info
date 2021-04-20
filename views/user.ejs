@@ -70,7 +70,7 @@
           </span>
           <%= item.name %>
         </td>
-        <td><%= item.description %></td>
+        <td><p title="<%= item.description %>"><%= TransUtils.toEnglish(item.description) %></p></td>
       </tr>
     <% }); %>
   </table>

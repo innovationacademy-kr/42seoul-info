@@ -3,6 +3,7 @@ const router = express.Router();
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 const ObjectUtils = require('../common/ObjectUtils');
 const DateUtils = require('../common/DateUtils');
+const TransUtils = require('../common/TransUtils');
 const userService = require('../services/userService');
 
 /* GET users listing. */
@@ -32,6 +33,7 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
     user: one,
     updatedAt: DateUtils.getDatetime((!user || refresh) ? undefined : user.updatedAt),
     DateUtils,
+    TransUtils,
   })
 });
 

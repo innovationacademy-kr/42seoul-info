@@ -8,8 +8,9 @@ a {
 }
 
 #profile-image {
-  width: 160px;
+  width: 200px;
   border-radius: 20px;
+  box-shadow: 2px 2px 5px grey;
 }
 table {
   border-collapse: collapse;
