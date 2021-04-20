@@ -1,6 +1,5 @@
 require('dotenv').config();
 const axios = require('axios');
-const { token } = require('morgan');
 const userService = require('../services/userService');
 const END_POINT_42_API = "https://api.intra.42.fr";
 
@@ -61,7 +60,7 @@ async function doIt() {
   const activeList = await getActiveList();
 
   // update each item every 3 senconds
-  if (token.access_token) {
+  if (activeList.length > 0 && token.access_token) {
     await updateList(activeList, token.access_token);
   }
   console.log(`Finished: ${activeList.length} cadets`);
