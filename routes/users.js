@@ -11,10 +11,12 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
   const username = req.query.u;
   const refresh = req.query.r;
   const user = await userService.findOne(username);
+  let coalition = (typeof user.coalition === 'string') ? JSON.parse(user.coalition) : user.coalition;
   let one;
   if (!user || refresh) {
     try {
-      one = await userService.update(username, req.session.accessToken);
+      one = await userService.updateOne(username, req.session.accessToken);
+      coalition = one.coalition;
     } catch (err) {
       const error = new Error("[User.js] getUri, getCoalition: " + err.message);
       error.status = (err.response) ? err.response.status : 500;
@@ -31,6 +33,7 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
   }
   res.render('user', {
     user: one,
+    coalition,
     updatedAt: DateUtils.getDatetime((!user || refresh) ? undefined : user.updatedAt),
     DateUtils,
     TransUtils,
