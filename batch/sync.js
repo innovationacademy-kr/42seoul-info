@@ -38,7 +38,7 @@ async function updateList(list, accessToken) {
   function fetchData() {
     var user = list[idx];
     console.log(idx, user.id, user.username);
-    // userService.update(user.username, accessToken);
+    userService.update(user.username, accessToken);
     idx++;
     if (idx === list.length) {
       clearInterval(asyncFunction);
