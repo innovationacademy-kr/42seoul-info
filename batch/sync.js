@@ -33,7 +33,7 @@ async function getActiveList(where) {
 }
 
 async function updateList(list, accessToken) {
-  var asyncFunction = setInterval(fetchData, 30);
+  var asyncFunction = setInterval(fetchData, 3000);
   var idx = 0;
   function fetchData() {
     var user = list[idx];
