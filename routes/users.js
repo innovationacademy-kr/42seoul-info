@@ -15,9 +15,10 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
 
   try {
     user = await userService.findOne(username);
-    if (user !== null)
-      coalition = (user && typeof user.coalition === 'string') ? JSON.parse(user.coalition) : user.coalition;
-  } catch (err) {
+    if (user !== null) {
+        coalition = (user && typeof user.coalition === 'string') ? JSON.parse(user.coalition) : user.coalition;
+      }
+    } catch (err) {
     console.log("[user.js] findOne: ", err);
   }
   let one;
