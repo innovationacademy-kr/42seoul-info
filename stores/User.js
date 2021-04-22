@@ -26,7 +26,7 @@ async function save(user, coalition) {
   });
   const id = (result[0]) ? result[0].dataValues.id : null;
   const result2 = await User.upsert({ id: id, username: user.login, data: user, coalition });
-  console.log(result2);
+  console.log("[User.js] save: ", result2);
   return result2;
 }
 
