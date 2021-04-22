@@ -3,7 +3,8 @@ const User = require('../stores/User');
 const axios = require('axios');
 
 const checkIfCoalition = (coalition) => {
-  return ((coalition) ? coalition : { name: '', cover_url: '' });
+  const data = (typeof coalition === 'string') ? JSON.parse(coalition) : coalition;
+  return ((data) ? data : { name: '', cover_url: '' });
 }
 
 const END_POINT_42_API = "https://api.intra.42.fr";
