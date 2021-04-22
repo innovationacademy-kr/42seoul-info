@@ -14,16 +14,18 @@ const sequelize = (DB_NAME) ?
 class User extends Model { }
 User.init({
   username: DataTypes.STRING,
-  data: DataTypes.JSON
+  data: DataTypes.JSON,
+  coalition: DataTypes.JSON,
+  active: DataTypes.BOOLEAN
 }, { sequelize, modelName: 'user' });
 
-async function save(user) {
+async function save(user, coalition) {
   await sequelize.sync();
   const result = await User.findAll({
     where: { username: user.login }
   });
   const id = (result[0]) ? result[0].dataValues.id : null;
-  const result2 = await User.upsert({ id: id, username: user.login, data: user });
+  const result2 = await User.upsert({ id: id, username: user.login, data: user, coalition });
   console.log(result2);
   return result2;
 }
@@ -38,9 +40,9 @@ async function findOne(username) {
   return user;
 }
 
-async function findAll() {
+async function findAll(where) {
   await sequelize.sync();
-  const result = await User.findAll({});
+  const result = await User.findAll(where || {});
   return result;
 }
 

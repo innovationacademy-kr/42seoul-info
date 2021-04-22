@@ -9,9 +9,9 @@
     <button id="update">update</button>
   </p>
   <p>
-    <%= user.coalition.name %>
+    <%= coalition.name %>
   </p>
-  <img id="coalition" src="<%= user.coalition.cover_url %>"/>
+  <img id="coalition" src="<%= coalition.cover_url %>"/>
   <h3>Profile</h3>
   <div><img src="<%= user.image_url %>" alt="<%= user.login %> image" id="profile-image"></div>
   <dl>
@@ -33,7 +33,7 @@
       <dt>level</dt>
       <dd><%= cuser.level %></dd>
       <dt>blackholed at</dt>
-      <dd><%= cuser.blackholed_at ? dayjs(cuser.blackholed_at).format('YYYY/MM/DD HH:mm:ss') : '' %></dd>
+      <dd><%= DateUtils.format(cuser.blackholed_at, 'YYYY/MM/DD HH:mm:ss') %></dd>
     <% }); %>
   </dl>
   <h3>Projects</h3>
@@ -47,7 +47,7 @@
       <% user.projects_users.forEach(item => { %>
         <tr>
           <td class="project"><%= item.project.name %></td>
-          <td class="marked"><%= dayjs(item.marked_at).format('YYYY/MM/DD HH:mm:ss') %></td>
+          <td class="marked"><%= DateUtils.format(item.marked_at, 'YYYY/MM/DD HH:mm:ss') %></td>
           <td class="hourdiff">
             <div class="diff"><%= item.diff %></div>
           </td>
@@ -70,7 +70,7 @@
           </span>
           <%= item.name %>
         </td>
-        <td><%= item.description %></td>
+        <td><p title="<%= item.description %>"><%= TransUtils.toEnglish(item.description) %></p></td>
       </tr>
     <% }); %>
   </table>

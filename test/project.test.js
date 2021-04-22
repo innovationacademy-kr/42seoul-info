@@ -4,7 +4,7 @@ const ObjectUtils = require('../common/ObjectUtils');
 
 test('get project list and sort', () => {
   projectList = data.projects_users;
-  expect(projectList.length).toBe(38);
+  expect(projectList.length).toBe(27);
   ObjectUtils.calcDiff(projectList, 'marked_at');
-  expect(projectList[3].diff).toBe(31);
+  expect(projectList[3].diff).toBe(18);
 });

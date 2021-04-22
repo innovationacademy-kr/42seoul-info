@@ -1,6 +1,11 @@
 const ObjectUtils = {
   calcDiff: function (list, key) {
-    list.sort((a, b) => (a[key] < b[key]) ? -1 : 1);
+    list.sort((a, b) => {
+      if (a[key] === null) {
+        return -1;
+      }
+      return (a[key] < b[key]) ? -1 : 1
+    });
     let lastTime = 0;
     list.forEach(item => {
       const timestamp = new Date(item[key]).getTime();
