@@ -38,12 +38,12 @@ const userService = {
     await userService.save(one, checkIfCoalition(one.coalition));
     return one;
   },
-  updateBatch: async function (user, accessToken) {
-    const userUri = `${END_POINT_42_API}/v2/users/${user.username}`;
+  updateBatch: async function (username, accessToken, coalition) {
+    const userUri = `${END_POINT_42_API}/v2/users/${username}`;
     const response = await axios.all([axios42(accessToken).get(userUri)]);
     one = { ...response[0].data };
     ObjectUtils.calcDiff(one.projects_users, 'marked_at');
-    await userService.save(one, checkIfCoalition(user.coalition));
+    await userService.save(one, checkIfCoalition(coalition));
     return one;
   }
 };
