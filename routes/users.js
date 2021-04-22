@@ -11,7 +11,7 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
   const username = req.query.u;
   const refresh = req.query.r;
   const user = await userService.findOne(username);
-  let coalition = (typeof user.coalition === 'string') ? JSON.parse(user.coalition) : user.coalition;
+  let coalition = (user && typeof user.coalition === 'string') ? JSON.parse(user.coalition) : user.coalition;
   let one;
   if (!user || refresh) {
     try {
