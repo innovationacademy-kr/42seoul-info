@@ -10,15 +10,23 @@ const userService = require('../services/userService');
 router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
   const username = req.query.u;
   const refresh = req.query.r;
-  const user = await userService.findOne(username);
-  let coalition = (user && typeof user.coalition === 'string') ? JSON.parse(user.coalition) : user.coalition;
+  let coalition;
+  let user;
+
+  try {
+    user = await userService.findOne(username);
+    if (user !== null)
+      coalition = (user && typeof user.coalition === 'string') ? JSON.parse(user.coalition) : user.coalition;
+  } catch (err) {
+    console.log("[user.js] findOne: ", err);
+  }
   let one;
   if (!user || refresh) {
     try {
       one = await userService.updateOne(username, req.session.accessToken);
       coalition = one.coalition;
     } catch (err) {
-      const error = new Error("[User.js] getUri, getCoalition: " + err.message);
+      const error = new Error("[user.js] getUri, getCoalition: " + err.message);
       error.status = (err.response) ? err.response.status : 500;
       if (error.status === 401) {
         res.redirect('/login/42');
