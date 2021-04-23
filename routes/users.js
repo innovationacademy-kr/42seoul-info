@@ -24,8 +24,12 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
   let one;
   if (!user || refresh) {
     try {
-      one = await userService.updateOne(username, req.session.accessToken);
-      coalition = one.coalition;
+      if (!coalition) {
+        one = await userService.updateOne(username, req.session.accessToken);
+        coalition = one.coalition;
+      } else {
+        one = await userService.updateBatch(username, req.session.accessToken, coalition);
+      }
     } catch (err) {
       const error = new Error("[user.js] getUri, getCoalition: " + err.message);
       error.status = (err.response) ? err.response.status : 500;
