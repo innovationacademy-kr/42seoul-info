@@ -39,7 +39,7 @@ async function updateList(list, accessToken) {
     var user = list[idx];
     console.log(idx, user.id, user.username);
     try {
-      userService.updateBatch(user, accessToken);
+      await userService.updateBatch(user.username, accessToken, user.coalition);
     } catch (e) {
       console.log(`err: ${user.username}, e.message`);
     }
