@@ -87,7 +87,7 @@
   updBtn.addEventListener('click', function(e){
     var qs = location.search;
     var url = location.pathname;
-    var info = qs.match(/(\?u=\w*)&*/);
+    var info = qs.match(/(\?u=[\w-]*)&*/);
     if (info.length > 1) {
       url += info[1] + '&r=' + Date.now();
       location.href = url;
