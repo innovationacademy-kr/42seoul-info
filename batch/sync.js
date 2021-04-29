@@ -31,6 +31,7 @@ async function getToken() {
 async function getActiveList(where) {
   return await userService.findAll(where);;
 }
+const failedList = [];
 
 async function updateList(list, accessToken) {
   var asyncFunction = setInterval(fetchData, 3000);
@@ -41,10 +42,12 @@ async function updateList(list, accessToken) {
     try {
       await userService.updateBatch(user.username, accessToken, user.coalition);
     } catch (e) {
+      failedList.push(user.username);
       console.log(`err: ${user.username}, e.message`);
     }
     idx++;
     if (idx === list.length) {
+      console.log(failedList.length, failedList);
       clearInterval(asyncFunction);
     }
   }
