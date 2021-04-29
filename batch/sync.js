@@ -43,7 +43,7 @@ async function updateList(list, accessToken) {
       await userService.updateBatch(user.username, accessToken, user.coalition);
     } catch (e) {
       failedList.push(user.username);
-      console.log(`err: ${user.username}, e.message`);
+      console.log(`err: ${user.username}, ${e.message}`);
     }
     idx++;
     if (idx === list.length) {
