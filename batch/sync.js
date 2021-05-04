@@ -47,7 +47,7 @@ async function updateList(list, accessToken) {
     }
     idx++;
     if (idx === list.length) {
-      console.log(failedList.length, failedList);
+      console.log(failedList.length, JSON.stringify(failedList));
       clearInterval(asyncFunction);
     }
   }
@@ -75,7 +75,7 @@ async function doIt() {
   if (activeList.length > 0 && token.access_token) {
     await updateList(activeList, token.access_token);
   }
-  console.log(`Finished: ${activeList.length} cadets`);
+  console.log(`Scheduled: ${activeList.length} cadets`);
 }
 
 doIt();

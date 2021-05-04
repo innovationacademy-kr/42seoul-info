@@ -3,6 +3,7 @@ const router = express.Router();
 const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 const ObjectUtils = require('../common/ObjectUtils');
 const DateUtils = require('../common/DateUtils');
+const ImageUtils = require('../common/ImageUtils');
 const TransUtils = require('../common/TransUtils');
 const userService = require('../services/userService');
 
@@ -44,6 +45,7 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
     one = (typeof user.data === 'string') ? JSON.parse(user.data) : user.data;
     ObjectUtils.calcDiff(one.projects_users, 'marked_at');
   }
+  one.image_small = ImageUtils.small(one.image_url);
   res.render('user', {
     user: one,
     coalition,
