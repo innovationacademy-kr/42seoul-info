@@ -33,9 +33,11 @@ th, td {
 }
 .project {
   width: 30%;
+  min-width: 190px;
 }
 .marked {
   width: 30%;
+  min-width: 190px;
 }
 .hourdiff {
   width: 40%;
