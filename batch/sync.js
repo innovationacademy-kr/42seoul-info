@@ -49,13 +49,13 @@ async function updateList(list, accessToken) {
       console.log(`err: ${user.username}, ${e.message}`);
     }
     idx++;
-    if ( idx > 5 || idx === list.length) {
-      console.log(failedList.length, JSON.stringify(failedList.map(user => user.username)));
+    if (tries < 4 && idx === list.length) {
+      console.log(`failed`, failedList.length, JSON.stringify(failedList.map(user => user.username)));
       clearInterval(asyncFunction);
 
       if (failedList.length > 0) {
         tries++;
-        console.log('\n\n', tries + ' ===');
+        console.log('\n\n', tries + ' trial ===');
         await updateList(failedList, accessToken);
       }
     }
