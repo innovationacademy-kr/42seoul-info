@@ -31,24 +31,33 @@ async function getToken() {
 async function getActiveList(where) {
   return await userService.findAll(where);;
 }
-const failedList = [];
+
+var tries = 1;
 
 async function updateList(list, accessToken) {
-  var asyncFunction = setInterval(fetchData, 3000);
   var idx = 0;
+  const failedList = [];
+  var asyncFunction = setInterval(fetchData, 3000);
+
   async function fetchData() {
     var user = list[idx];
     console.log(idx, user.id, user.username);
     try {
       await userService.updateBatch(user.username, accessToken, user.coalition);
     } catch (e) {
-      failedList.push(user.username);
+      failedList.push(user);
       console.log(`err: ${user.username}, ${e.message}`);
     }
     idx++;
-    if (idx === list.length) {
-      console.log(failedList.length, JSON.stringify(failedList));
+    if ( idx > 5 || idx === list.length) {
+      console.log(failedList.length, JSON.stringify(failedList.map(user => user.username)));
       clearInterval(asyncFunction);
+
+      if (failedList.length > 0) {
+        tries++;
+        console.log('\n\n', tries + ' ===');
+        await updateList(failedList, accessToken);
+      }
     }
   }
 }

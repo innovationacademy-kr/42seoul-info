@@ -8,7 +8,8 @@ const DB_HOST = process.env.DB_HOST || 'localhost';
 const sequelize = (DB_NAME) ?
   new Sequelize(DB_NAME, DB_USER, DB_PASS, {
     host: DB_HOST,
-    dialect: 'mysql'
+    dialect: 'mysql',
+    logging: false
   }) : new Sequelize('sqlite::/tmp/testdb');
 
 class User extends Model { }
@@ -26,7 +27,6 @@ async function save(user, coalition) {
   });
   const id = (result[0]) ? result[0].dataValues.id : null;
   const result2 = await User.upsert({ id: id, username: user.login, data: user, coalition });
-  console.log("[User.js] save: ", result2);
   return result2;
 }
 
