@@ -41,6 +41,10 @@ async function updateList(list, accessToken) {
 
   async function fetchData() {
     var user = list[idx];
+    if (!user) {
+      clearInterval(asyncFunction);
+      return;
+    }
     console.log(idx, user.id, user.username);
     try {
       await userService.updateBatch(user.username, accessToken, user.coalition);
