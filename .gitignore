@@ -10,6 +10,7 @@ package-lock.json
 .vscode
 .env
 *.log
+batch/*.txt
 
 # sonarqube
 .scannerwork

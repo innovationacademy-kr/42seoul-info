@@ -1,7 +1,8 @@
+
 require('dotenv').config();
-const { Op } = require('sequelize');
 const axios = require('axios');
 const userService = require('../services/userService');
+const FileUtils = require('../common/FileUtils');
 const END_POINT_42_API = "https://api.intra.42.fr";
 
 async function getToken() {
@@ -28,33 +29,25 @@ async function getToken() {
   };
 }
 
-async function getActiveList(where) {
-  return await userService.findAll(where);;
-}
-
 var tries = 1;
 
 async function updateList(list, accessToken) {
   var idx = 0;
   const failedList = [];
-  var asyncFunction = setInterval(fetchData, 3000);
+  var asyncFunction = setInterval(addData, 3000);
 
-  async function fetchData() {
-    var user = list[idx];
-    if (!user) {
-      clearInterval(asyncFunction);
-      return;
-    }
-    console.log(idx, user.id, user.username);
+  async function addData() {
+    var username = list[idx];
+    console.log(idx, username);
     try {
-      await userService.updateBatch(user.username, accessToken, user.coalition);
+      await userService.updateOne(username, accessToken);
     } catch (e) {
-      failedList.push(user);
-      console.log(`err: ${user.username}, ${e.message}`);
+      failedList.push(username);
+      console.log(`err: ${username}, ${e.message}`);
     }
     idx++;
     if (tries < 4 && idx === list.length) {
-      console.log(`failed`, failedList.length, JSON.stringify(failedList.map(user => user.username)));
+      console.log(`failed`, failedList.length, JSON.stringify(failedList));
       clearInterval(asyncFunction);
 
       if (failedList.length > 0) {
@@ -71,18 +64,8 @@ async function doIt() {
   const token = await getToken();
   console.log(token.access_token);
 
-  // load list with active status
-  const where = {
-    where: {
-      id: {
-        [Op.gte]: process.env.START_ID || 0
-      },
-      active: {
-        [Op.eq]: true
-      }
-    }
-  }
-  const activeList = await getActiveList(where);
+  const filePath = __dirname + '/list.txt.sample';
+  const activeList = await FileUtils.getListFromFile(filePath);
 
   // update each item every 3 senconds
   if (activeList.length > 0 && token.access_token) {
