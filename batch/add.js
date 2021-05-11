@@ -64,7 +64,7 @@ async function doIt() {
   const token = await getToken();
   console.log(token.access_token);
 
-  const filePath = __dirname + '/list.txt.sample';
+  const filePath = __dirname + '/list.txt';
   const activeList = await FileUtils.getListFromFile(filePath);
 
   // update each item every 3 senconds
