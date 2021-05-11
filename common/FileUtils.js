@@ -11,7 +11,9 @@ const FileUtils = {
     });
     const list = [];
     rl.on('line', line => {
-      list.push(line.toLowerCase());
+      if (line && line.trim()) {
+        list.push(line.toLowerCase().trim());
+      }
     });
     await once(rl, 'close');
     return list;
