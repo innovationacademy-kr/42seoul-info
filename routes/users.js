@@ -55,4 +55,12 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
   })
 });
 
+router.get('/list', async function (req, res, next) {
+  const userList = await userService.getListOfUsername();
+  const data = {
+    list: userList
+  };
+  res.render('users/list', data);
+});
+
 module.exports = router;

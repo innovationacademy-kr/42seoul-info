@@ -1,4 +1,4 @@
-const { Sequelize, Model, DataTypes } = require('sequelize');
+const { Sequelize, Model, DataTypes, QueryTypes } = require('sequelize');
 const DB_NAME = process.env.DB_NAME;
 const DB_USER = process.env.DB_USER;
 const DB_PASS = process.env.DB_PASS;
@@ -46,8 +46,15 @@ async function findAll(where) {
   return result;
 }
 
+async function getListOfUsername() {
+  await sequelize.sync();
+  const users = await sequelize.query("SELECT username FROM `users`", { type: QueryTypes.SELECT });
+  return users
+}
+
 module.exports = {
   save,
   findOne,
-  findAll
+  findAll,
+  getListOfUsername
 };

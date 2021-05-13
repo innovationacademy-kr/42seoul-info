@@ -28,6 +28,9 @@ const userService = {
     console.log(where);
     return await User.findAll(where || {});
   },
+  getListOfUsername: async function () {
+    return await User.getListOfUsername();
+  },
   updateOne: async function (username, accessToken) {
     const userUri = `${END_POINT_42_API}/v2/users/${username}`;
     const coalitionUri = `${END_POINT_42_API}/v2/users/${username}/coalitions`;
