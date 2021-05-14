@@ -9,11 +9,15 @@
 </head>
 
 <body>
+  <ul>
   <% list.forEach((user, idx)=> { %>
-    <a href="/users?u=<%= user.username %>">
-      <%= user.username %>
-    </a>
+    <li>
+      <a href="/users?u=<%= user.username %>">
+        <%= user.username %>
+      </a>
+    </li>
   <% }); %>
-</body>
+  </ul>
+  </body>
 
 </html>
