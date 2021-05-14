@@ -1,4 +1,9 @@
 const DateUtils = require('../common/DateUtils');
+const dayjs = require('dayjs');
+
+const relativeTime = require('dayjs/plugin/relativeTime')
+dayjs.extend(relativeTime);
+
 function lpad(number) {
   return number > 9 ? String(number) : '0' + number;
 }
@@ -24,4 +29,9 @@ test('DateUtils.format', () => {
 test('DateUtils.getDatetime', () => {
   expect(DateUtils.getDatetime('2021/04/17 13:05:05')).toBe('2021-04-17 13:05:05');
   expect(DateUtils.getDatetime(undefined)).toBe(dateStr + ' ' + timeStr);
+});
+
+test('datediff', () => {
+  expect(DateUtils.datediff('2021/04/16 13:05:05', '2021/04/17 13:05:05')).toBe('1 일');
+  expect(DateUtils.datediff('2021/03/16 13:05:05', '2021/04/17 13:05:05')).toBe('32 일');
 });

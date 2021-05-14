@@ -5,19 +5,26 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel='stylesheet' href='/stylesheets/style.css' />
   <title>List</title>
 </head>
 
 <body>
-  <ul>
+  <table>
   <% list.forEach((user, idx)=> { %>
-    <li>
-      <a href="/users?u=<%= user.username %>">
-        <%= user.username %>
-      </a>
-    </li>
+    <tr>
+      <td>
+        <a href="/users?u=<%= user.username %>">
+          <%= user.username %>
+        </a>
+      </td>
+      <td title="<%= user.blackhole %>" class="toblack">
+        <%= user.toBlack %>
+      </td>
+    </tr>
   <% }); %>
-  </ul>
+  </td>
   </body>
 
 </html>

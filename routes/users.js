@@ -55,8 +55,12 @@ router.get('/', ensureLoggedIn('/login/42'), async function (req, res, next) {
   })
 });
 
-router.get('/list', async function (req, res, next) {
+router.get('/list', ensureLoggedIn('/login/42'), async function (req, res, next) {
   const userList = await userService.getListOfUsername();
+  userList.forEach(user => {
+    user.blackhole = DateUtils.format(user.blackholedAt, 'YY/MM/DD HH:mm:ss');
+    user.toBlack = DateUtils.datediff(Date.now(), user.blackholedAt);
+  });
   const data = {
     list: userList
   };

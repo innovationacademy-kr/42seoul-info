@@ -17,6 +17,12 @@ const DateUtils = {
       return '';
     }
     return dayjs(date).format(formatStr);
+  },
+  datediff: function(from, to) {
+    const date1 = dayjs(from);
+    const date2 = dayjs(to);
+    const diff = date2.diff(date1, 'day', false);
+    return diff + ' 일';
   }
 };
 
