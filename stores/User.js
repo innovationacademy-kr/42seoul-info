@@ -17,7 +17,9 @@ User.init({
   username: DataTypes.STRING,
   data: DataTypes.JSON,
   coalition: DataTypes.JSON,
-  active: DataTypes.BOOLEAN
+  active: DataTypes.BOOLEAN,
+  generation: DataTypes.STRING,
+  blackholedAt: DataTypes.DATE
 }, { sequelize, modelName: 'user' });
 
 async function save(user, coalition) {
@@ -48,7 +50,7 @@ async function findAll(where) {
 
 async function getListOfUsername() {
   await sequelize.sync();
-  const users = await sequelize.query("SELECT username, `group`, blackholedAt FROM `users` where blackholedAt is not null order by blackholedAt", { type: QueryTypes.SELECT });
+  const users = await sequelize.query("SELECT username, generation, blackholedAt FROM `users` where blackholedAt is not null order by blackholedAt", { type: QueryTypes.SELECT });
   return users
 }
 
