@@ -50,7 +50,8 @@ async function findAll(where) {
 
 async function getListOfUsername() {
   await sequelize.sync();
-  const users = await sequelize.query("SELECT username, generation, blackholedAt FROM `users` where blackholedAt is not null order by blackholedAt", { type: QueryTypes.SELECT });
+  const users = await sequelize.query(`SELECT username, generation, grade, level, blackholedAt
+FROM users where blackholedAt is not null order by blackholedAt`, { type: QueryTypes.SELECT });
   return users
 }
 
