@@ -42,12 +42,16 @@
       <tr>
         <th class="project">project</th>
         <th class="marked">marked_at</th>
+        <th class="status">status</th>
         <th class="hourdiff">hour diff</th>
       </tr>
-      <% user.projects_users.forEach(item => { %>
-        <tr>
+      <% user.projects_users.forEach(item => {
+        const status = (item.status !== 'finished') ? 'in-progress' : '';
+      %>
+        <tr class="<%= status %>">
           <td class="project"><%= item.project.name %></td>
           <td class="marked"><%= DateUtils.format(item.marked_at, 'YYYY/MM/DD HH:mm:ss') %></td>
+          <td class="status"><%= item.status %></td>
           <td class="hourdiff">
             <div class="diff"><%= item.diff %></div>
           </td>

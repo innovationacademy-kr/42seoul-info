@@ -35,6 +35,10 @@ th, td {
   width: 30%;
   min-width: 190px;
 }
+.in-progress {
+  font-weight: 800;
+  color: #00babc;
+}
 .marked {
   width: 30%;
   min-width: 190px;
